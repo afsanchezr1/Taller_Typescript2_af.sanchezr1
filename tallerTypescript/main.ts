@@ -6,6 +6,9 @@ let coursesTbody: HTMLElement = document.getElementById('courses')!;
 const btnfilterByName: HTMLElement = document.getElementById("button-filterByName")!;
 const inputSearchBox: HTMLInputElement = <HTMLInputElement> document.getElementById("search-box")!;
 const totalCreditElm: HTMLElement = document.getElementById("total-credits")!;
+const botMaximo: HTMLInputElement = <HTMLInputElement> document.getElementById("maximo")!;
+const botMinimo: HTMLInputElement = <HTMLInputElement> document.getElementById("minimo")!;
+const botRango: HTMLInputElement = <HTMLInputElement> document.getElementById("boton_rango")!;
 
 
 btnfilterByName.onclick = () => applyFilterByName();
@@ -38,9 +41,10 @@ function applyFilterByName() {
 }
 
 function applyFilterByCredits() { 
-    let num = +inputSearchBox.value;
+    let max = +botMaximo.value;
+    let min = +botMinimo.value;
     clearCoursesInTable();
-    let coursesFiltered: Course[] = searchCourseByCredits(num, dataCourses);
+    let coursesFiltered: Course[] = searchCourseByCredits(max,min, dataCourses);
     renderCoursesInTable(coursesFiltered);
   }
 
@@ -49,9 +53,9 @@ function searchCourseByName(nameKey: string, courses: Course[]) {
     c.name.match(nameKey));
 }
 
-function searchCourseByCredits(creditKey: number, courses: Course[]) {
+function searchCourseByCredits(max: number, min: number, courses: Course[]) {
     dataCourses : courses.filter( c => 
-      c.credits === creditKey);
+      c.credits <= max && c.credits >= min);
     return dataCourses;
   }
 
